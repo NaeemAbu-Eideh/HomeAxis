@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dbName = process.env.DB;
 const username = process.env.ATLAS_USERNAME;
-const pw = process.env.ATLUS_PASSWORD;
+const pw = process.env.ATLAS_PASSWORD;
 const uri = `mongodb+srv://${username}:${pw}@naeem.rwpkjwm.mongodb.net/${dbName}?appName=naeem`;
 mongoose.connect(uri)
 
