@@ -77,6 +77,11 @@ const ApartmentSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
         required: [true, 'Available is required'],
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, "Owner is required"],
     }
 }, {
     timestamps: true

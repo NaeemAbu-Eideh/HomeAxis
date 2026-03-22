@@ -1,55 +1,32 @@
 const mongoose = require('mongoose');
+
 const UserSchema = new mongoose.Schema({
-    firstname:{
+    firstname: {
         type: String,
-        required: [
-            true,
-            'First name is required'
-        ],
-        minlength: [
-            3,
-            "First name must be at least 3 characters long"
-        ],
+        required: [true, 'First name is required'],
+        minlength: [3, "First name must be at least 3 characters long"],
         trim: true
     },
-    lastname:{
+    lastname: {
         type: String,
-        required: [
-            true,
-            'Last name is required'
-        ],
-        minlength: [
-            3,
-            "Last name must be at least 3 characters long"
-        ],
+        required: [true, 'Last name is required'],
+        minlength: [3, "Last name must be at least 3 characters long"],
         trim: true
     },
-    email:{
+    email: {
         type: String,
-        required: [
-            true,
-            'Email is required'
-        ],
-        unique: [
-            true,
-            'Email is already exists'
-        ],
+        required: [true, 'Email is required'],
+        unique: true,
         match: [
             /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
             'Email must be valid'
         ]
     },
-    password:{
+    password: {
         type: String,
-        required: [
-            true,
-            'Password is required'
-        ],
-        minlength: [
-            8,
-            "Password must be at least 8 characters long"
-        ],
-        select:false
+        required: [true, 'Password is required'],
+        minlength: [8, "Password must be at least 8 characters long"],
+        select: false
     },
     birthdate: {
         type: Date,
@@ -69,13 +46,13 @@ const UserSchema = new mongoose.Schema({
     },
     picture: {
         type: String,
+        default: ''
     },
     phone: {
         type: String,
         required: [true, 'Phone is required'],
         match: [/^\+[1-9]\d{7,14}$/, 'Please use valid international phone number']
     },
-
     whatsapp: {
         type: String,
         required: [true, 'Whatsapp is required'],
@@ -92,7 +69,16 @@ const UserSchema = new mongoose.Schema({
         }
     }
 }, {
-    timestamps:true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+UserSchema.virtual('apartments', {
+    ref: 'Apartment',
+    localField: '_id',
+    foreignField: 'owner',
+    justOne: false
 });
 
 const User = mongoose.model('User', UserSchema);
