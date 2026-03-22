@@ -2,6 +2,7 @@ import './App.css'
 import React, {useEffect, useState} from "react"
 import {Route, Routes} from "react-router-dom";
 import {getApartments, getUsers} from "./functions/function.function.jsx";
+import Dashboard from "./pages/dashboard.jsx";
 
 function App() {
     const [apartments, setApartments] = useState([]);
@@ -28,6 +29,9 @@ function App() {
     }, [checkedUser]);
     return (
         <>
+            <Routes>
+                <Route path="/" element={<Dashboard />} />
+            </Routes>
         </>
     );
 }
